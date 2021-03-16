@@ -13,3 +13,12 @@
     
   </div>
 </template>
+<script>
+export default {
+  mounted() {
+    if(this.$route.query.subscribed) {
+      this.$toast.success('Thanks! Now please check your email :)')
+    }
+  }
+}
+</script>

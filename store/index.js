@@ -23,7 +23,7 @@ export const actions = {
 }
 
 export const getters = {
-    // isLoggedIn(state) {
-    //     return state.auth.loggedIn
-    // },
+    isLoggedIn(state) {
+        return state.auth.loggedIn
+    },
 }

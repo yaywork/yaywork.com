@@ -11,7 +11,7 @@
             <h3 class="font-black uppercase italic">Subscribe</h3>
             <p class="mt-2 leading-3 text-amber-900">Drop your email and I’ll email you when interesting things happen.</p>
             <form method="post" :action="'https://sendfox.com/form/' + sendfox_user_id + '/' + sendfox_form_id " class="sendfox-form mt-2" :id="sendfox_form_id" data-async="true" data-recaptcha="false">            
-                <input type="email" placeholder="very@cool.com" name="email" required class="h-8 px-4"/>
+                <input type="email" placeholder="very@cool.com" name="email" required :value="[$auth.loggedIn ? $auth.user.email : '']" class="h-8 px-4"/>
                 <button native-type="submit" class="bg-rose-600 h-8 px-4 ml-4 hover:bg-blueGray-900 hover:text-white mt-1"><v-icon name="long-arrow-alt-right" scale="2.0"/></button>
                 <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="a_password" tabindex="-1" value="" autocomplete="off" /></div>          
             </form>

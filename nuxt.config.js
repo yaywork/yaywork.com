@@ -7,10 +7,12 @@ export default {
 
   env: {
     DOMAIN: process.env.DOMAIN,
-    API_URL: process.env.API_URL,
+    API_TARGET: process.env.API_TARGET,
     FRONTEND_URL: process.env.FRONTEND_URL,
     SENDFOX_USER_ID: process.env.SENDFOX_USER_ID,
     SENDFOX_FORM_ID: process.env.SENDFOX_FORM_ID,
+    SENTRY_DEBUG: process.env.SENTRY_DEBUG,
+    SENTRY_DSN: process.env.SENTRY_DSN,
     ENV: process.env.ENV
   },
 
@@ -26,7 +28,7 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ]
   },
 
@@ -39,7 +41,8 @@ export default {
   plugins: [
     '~/plugins/components.js',
     '~/plugins/packages.js',
-    '~/plugins/vue-awesome.js'
+    '~/plugins/vue-awesome.js',
+    '~/plugins/error.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -56,32 +59,41 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/auth-next',
     'nuxt-validate',
     '@nuxtjs/toast',
+    '@nuxtjs/sentry'
   ],
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
-
+  loading: false,
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+    config: {
+      debug: process.env.SENTRY_DEBUG || false,
+      environment: process.env.ENV || 'development'
+    },
+  },
   toast: {
     position: 'top-center',
     duration: 4000
   },
   axios: {
-    baseURL: process.env.API_URL
+    proxy: true
+  },
+  proxy: {
+    '/api/': { target: process.env.API_TARGET, pathRewrite: {'^/api/': '/'} }
   },
   auth: {
     redirect: {
       login: '/auth/login',
       logout: '/',
       callback: '/auth/login',
-      home: '/jump'
+      home: '/home'
     },
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
-        url: process.env.API_URL,
+        url: '/api',
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
           refresh: { url: '/auth/refresh', method: 'post' },

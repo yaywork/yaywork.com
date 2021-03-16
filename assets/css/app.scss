@@ -1,3 +1,53 @@
-body {
-    
+@import 'form';
+
+
+html, body {
+    background: theme('colors.blue.100');
+}
+html{
+    font-size: 16px;
+    @apply text-blueGray-900;
+    @apply leading-0;
+    @media screen and (min-width: theme('screens.sm')){
+        font-size: 17px;
+    }
+    @media screen and (min-width: theme('screens.lg')){
+        font-size: 18px;
+    }
+}
+body{
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+input {
+    &[aria-invalid=true] {
+        @apply border-2 border-rose-400 outline-none;
+    }
+  }
+
+a, .link {
+    @apply underline cursor-pointer;
+    &:hover {
+        @apply bg-blue-200;
+    }
+}
+
+.fa-icon {
+    width: auto;
+    height: 1em; /* or any other relative font sizes */
+  
+    /* You would have to include the following two lines to make this work in Safari */
+    max-width: 100%;
+    max-height: 100%;
+
+    vertical-align: middle!important;
+}
+
+.button {
+    @apply bg-yellow-300 underline;
+    &:hover {
+        @apply bg-blue-200;
+    }
 }

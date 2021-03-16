@@ -7,7 +7,7 @@ export default {
 
   env: {
     DOMAIN: process.env.DOMAIN,
-    API_TARGET: process.env.API_TARGET,
+    API_URL: process.env.API_URL,
     FRONTEND_URL: process.env.FRONTEND_URL,
     SENDFOX_USER_ID: process.env.SENDFOX_USER_ID,
     SENDFOX_FORM_ID: process.env.SENDFOX_FORM_ID,
@@ -59,7 +59,6 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
     '@nuxtjs/auth-next',
     'nuxt-validate',
     '@nuxtjs/toast',
@@ -78,10 +77,7 @@ export default {
     duration: 4000
   },
   axios: {
-    proxy: true
-  },
-  proxy: {
-    '/api/': { target: process.env.API_TARGET, pathRewrite: {'^/api/': '/'} }
+    
   },
   auth: {
     redirect: {
@@ -93,7 +89,7 @@ export default {
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
-        url: '/api',
+        url: process.env.API_URL,
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
           refresh: { url: '/auth/refresh', method: 'post' },

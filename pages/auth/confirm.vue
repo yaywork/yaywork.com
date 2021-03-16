@@ -22,7 +22,7 @@ export default {
     methods: {
         async verify(code) {
             try {
-                let userResponse = await this.$axios.patch('/api/user/confirm', {
+                let userResponse = await this.$axios.patch('/user/confirm', {
                     code: code
                 })
                 this.$store.dispatch('stopLoading')

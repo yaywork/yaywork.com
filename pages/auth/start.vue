@@ -138,7 +138,7 @@ export default {
         async signup() {
             try {
                 this.$store.dispatch('startLoading')
-                let userResponse = await this.$axios.post('/api/user', this.newUser)
+                let userResponse = await this.$axios.post('/user', this.newUser)
                 this.login()
             } catch (e) { 
                 this.$catchError(e)
@@ -147,7 +147,7 @@ export default {
         async checkUsername() {
             try {
                 this.$store.dispatch('startLoading')
-                let usernameResponse = await this.$axios.get('/api/user/checkUsername/' + this.newUser.username)
+                let usernameResponse = await this.$axios.get('/user/checkUsername/' + this.newUser.username)
                 this.$store.dispatch('stopLoading')
                 if(usernameResponse.data.available) {
                     this.step = 2
